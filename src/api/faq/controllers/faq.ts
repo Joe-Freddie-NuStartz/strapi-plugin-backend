@@ -475,15 +475,17 @@ export default factories.createCoreController('api::faq.faq', ({ strapi }) => ({
               },
               contextJson: { 
                 type: "object", 
-                description: "DYNAMIC DATA EXTRACTION: Extract ALL personal and other preference details from the user's message. " +
-                            "Create relevant keys based on what the user mentions. " +
-                            "IMPORTANT: Handle numerical updates intelligently: " +
-                            "- If user says 'I have 2 pets' -> {'pet_count': 2} " +
-                            "- If user says 'I have 1 more pet' and context shows pet_count: 2 -> {'pet_count': 3} " +
-                            "- If user corrects 'actually I have 3 pets' and context shows pet_count: 2 -> {'pet_count': 3} " +
-                            "- If user says 'total pets are 4' -> {'pet_count': 4} " +
-                            "Use snake_case keys. Create arrays for multiple items. Always include extracted_fact.",
-                additionalProperties: true
+                description: "CRITICAL: Extract ALL personal details, preferences, and facts from user's message. " +
+                            "Examples:\n" +
+                            "- User says 'I have 2 kids' → {child_count: 2}\n" +
+                            "- User says 'traveling to Paris' → {traveling_to: 'Paris'}\n" +
+                            "- User says 'I prefer luxury hotels' → {hotel_preference: 'luxury'}\n" +
+                            "- User says 'my budget is $500' → {budget: 500}\n" +
+                            "- User says 'I'm allergic to nuts' → {allergies: ['nuts']}\n" +
+                            "- User mentions date 'next Monday' → {travel_date: 'next Monday'}\n" +
+                            "Always include extracted_fact with a summary.",
+                additionalProperties: true,
+                required: ["extracted_fact"]
               }
             },
             required: ["intent", "resolvedQuestion", "keywords", "contextJson"]
@@ -497,17 +499,32 @@ export default factories.createCoreController('api::faq.faq', ({ strapi }) => ({
       messages: [
         { 
           role: 'system', 
-          content: `You are an intent classifier and context builder.
-          INSTRUCTIONS:
+          content: `CRITICAL INSTRUCTIONS:
           1. Determine intent: 'faq', 'general', or 'realtime'.
-          2. Build 'resolvedQuestion': Rewrite the question to be self-contained (e.g., "How much is cost of flight from mumbai to chennai". Next question: sorry i meant mumbai to delhi-> "How much is the flight from mumbai to delhi?").
-          3. Extract context into 'contextJson'.eg. If user says "I have 2 kids", add {"child_count": 2}. Handle numerical updates intelligently and other terms like travelling_to : xyz etc.
+          2. Build 'resolvedQuestion': Rewrite the question to be self-contained.
+          3. EXTRACT PERSONAL CONTEXT INTO contextJson: You MUST extract ALL personal details from the user's message.
 
-          USER CONTEXT:
+          PERSONAL CONTEXT EXTRACTION RULES:
+          - ANY personal information mentioned MUST go into contextJson
+          - Examples:
+            * "I have 2 kids" → {"child_count": 2, "extracted_fact": "User has 2 children"}
+            * "traveling to Tokyo" → {"traveling_to": "Tokyo", "extracted_fact": "User is traveling to Tokyo"}
+            * "my budget is $1000" → {"budget": 1000, "extracted_fact": "User has a budget of $1000"}
+            * "I prefer vegetarian food" → {"dietary_preference": "vegetarian", "extracted_fact": "User prefers vegetarian food"}
+            * "next Friday" → {"mentioned_date": "next Friday", "extracted_fact": "User mentioned next Friday"}
+
+          NUMERICAL UPDATES:
+          - If context shows {child_count: 2} and user says "I have 1 more kid" → {"child_count": 3}
+          - If user corrects "actually 3 kids" → {"child_count": 3}
+          - If user says "total 4 kids" → {"child_count": 4}
+
+          FORMAT: Use snake_case keys. ALWAYS include 'extracted_fact' as a string summary.
+
+          PREVIOUS USER CONTEXT (for reference):
           - Past Questions: ${JSON.stringify(context.enquiryHistory || [])}
           - Known Facts: ${JSON.stringify(context.contextJson || {})}
-          
-          DATABASE REFERENCE:
+
+          DATABASE REFERENCE (ignore for context extraction):
           ${samplesText}
           `
         },
