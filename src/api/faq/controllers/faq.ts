@@ -1,3 +1,12 @@
+// 1 ai call - realtime
+// 3 ai calls - faq + context update
+
+
+
+
+
+
+
 // import { factories } from '@strapi/strapi';
 // import OpenAI from 'openai';
 // import { ChatCompletionTool } from 'openai/resources/chat/completions';
@@ -387,8 +396,9 @@
 
 
 
-// with 3 ai calls
 
+// 2 ai calls - realtime
+// 3 ai calls - faq + context update
 
 
 
@@ -707,7 +717,7 @@ export default factories.createCoreController('api::faq.faq', ({ strapi }) => ({
             limit: 10 
           }
         );
-        
+        console.log("Realtime Data Returned:", data);
         ctx.res.write(`data: ${JSON.stringify({ type: 'realtime_data', collection, data: data.map(({id, ...r}) => r) })}\n\n`);
       } catch (err) {
         ctx.res.write(`data: ${JSON.stringify({ type: 'error', message: 'DB Query Failed' })}\n\n`);
@@ -717,7 +727,7 @@ export default factories.createCoreController('api::faq.faq', ({ strapi }) => ({
       const stream = await client.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: "Friendly assistant." },
+          { role: 'system', content: "Friendly assistant.Answer in 2 lines" },
           { role: 'user', content: resolvedQuestion }
         ],
         stream: true,
