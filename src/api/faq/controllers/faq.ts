@@ -1,5 +1,5 @@
-// 1 ai call - realtime
-// 3 ai calls - faq + context update
+// // 1 ai call - realtime
+// // 3 ai calls - faq + context update
 
 
 
@@ -650,7 +650,7 @@ export default factories.createCoreController('api::faq.faq', ({ strapi }) => ({
         ctx.res.write(`data: ${JSON.stringify({ type: 'error', message: 'FAQ Error' })}\n\n`);
       }
 
-    } else if (intent === 'realtime') {
+    } else if (intent === 'realtime') { 
       try {
         const queryResponse = await client.chat.completions.create({
           model: 'gpt-4o-mini',
