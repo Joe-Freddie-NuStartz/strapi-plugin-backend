@@ -1,5 +1,5 @@
-import { Magic } from '@strapi/icons';
+import { Discuss } from '@strapi/icons';
 
-const PluginIcon = () => <Magic />;
+const PluginIcon = () => <Discuss />;
 
 export { PluginIcon };
