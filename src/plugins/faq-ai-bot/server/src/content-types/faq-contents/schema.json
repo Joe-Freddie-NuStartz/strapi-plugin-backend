@@ -1,0 +1,26 @@
+{
+  "collectionName": "faq_contents",
+  "info": {
+    "singularName": "faq-content",
+    "pluralName": "faq-contents",
+    "displayName": "FAQ Content",
+    "description": "FAQ items with embeddings"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "text",
+      "required": true
+    },
+    "embedding": {
+      "type": "json",
+      "private": false
+    }
+  }
+}
