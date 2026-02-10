@@ -3,11 +3,26 @@ export default () => ({
   routes: [
     {
       method: 'GET',
-      path: '/',
-      // name of the controller file & the method.
-      handler: 'controller.index',
+      path: '/faqs',
+      handler: 'controller.list',
       config: {
-        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'POST',
+      path: '/faqs',
+      handler: 'controller.create',
+      config: {
+        auth: false,
+      },
+    },
+    {
+      method: 'GET',
+      path: '/faqs/:id',
+      handler: 'controller.findOne',
+      config: {
+        auth: false,
       },
     },
   ],
