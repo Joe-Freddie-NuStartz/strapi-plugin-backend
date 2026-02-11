@@ -1,5 +1,7 @@
-import service from './service';
+import service from "./service";
+import config from "./config";
 
 export default {
-  service,
+  config,
+  service
 };
