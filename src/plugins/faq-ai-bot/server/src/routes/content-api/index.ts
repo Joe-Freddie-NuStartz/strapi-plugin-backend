@@ -1,18 +1,26 @@
 export default () => ({
-  type: "content-api",
+  type: 'content-api',
   routes: [
     {
-      method: "GET",
-      path: "/",
-      handler: "controller.index",
+      method: 'GET',
+      path: '/faqs',
+      handler: 'controller.list',
       config: {
         auth: false,
       },
     },
     {
-      method: "POST",
-      path: "/ask",
-      handler: "ask.ask",
+      method: 'POST',
+      path: '/faqs',
+      handler: 'controller.create',
+      config: {
+        auth: false,
+      },
+    },
+    {
+      method: 'GET',
+      path: '/faqs/:id',
+      handler: 'controller.findOne',
       config: {
         auth: false,
       },
