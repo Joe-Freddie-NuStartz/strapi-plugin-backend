@@ -1,9 +1,7 @@
-import contentAPIRoutes from './content-api';
-import adminAPIRoutes from './admin';
+import admin from "./admin";
+import contentApi from "./content-api";
 
-const routes = {
-  'content-api': contentAPIRoutes,
-  admin: adminAPIRoutes,
+export default {
+  admin,
+  "content-api": contentApi,
 };
-
-export default routes;
