@@ -1,5 +1,5 @@
-import faqContents from './faq-contents';
+import faqContent from './faq-contents';
 
 export default {
-  faqContents,
+  'faq-content': faqContent,
 };
