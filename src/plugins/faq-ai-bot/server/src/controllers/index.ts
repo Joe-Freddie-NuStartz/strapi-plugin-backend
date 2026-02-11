@@ -1,9 +1,5 @@
-import controller from "./controller";
-import config from "./config";
-import ask from "./ask";
+import controller from './controller';
 
 export default {
   controller,
-  config,
-  ask,
 };
