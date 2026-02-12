@@ -4,20 +4,32 @@
   "info": {
     "singularName": "faq-content",
     "pluralName": "faq-contents",
-    "displayName": "FAQ Content",
-    "description": "FAQ items with embeddings"
+    "displayName": "FAQ AI Content",
+    "description": "Store FAQ questions and answers for the AI Chatbot"
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
     "question": {
-      "type": "string",
-      "required": true
+        "type": "string",
+        "required": true
     },
     "answer": {
-      "type": "text",
-      "required": true
+        "type": "richtext",
+        "required": true
+    },
+    "embedding": {
+        "type": "json",
+        "private": true,
+        "pluginOptions": {
+          "content-manager": {
+            "visible": false
+          },
+          "content-type-builder": {
+            "visible": false
+          }
+        }
     }
   }
 }

@@ -1,5 +1,5 @@
-import faqContent from './faq-contents';
+import faqContent from './faq-contents/schema.json';
 
 export default {
-  'faq-content': faqContent,
+  'faq-content': { schema: faqContent },
 };

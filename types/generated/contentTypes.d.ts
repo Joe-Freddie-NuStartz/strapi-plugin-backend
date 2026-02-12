@@ -812,8 +812,8 @@ export interface PluginContentReleasesReleaseAction
 export interface PluginFaqAiBotFaqContent extends Struct.CollectionTypeSchema {
   collectionName: 'faq_contents';
   info: {
-    description: 'FAQ items with embeddings';
-    displayName: 'FAQ Content';
+    description: 'Store FAQ questions and answers for the AI Chatbot';
+    displayName: 'FAQ AI Content';
     pluralName: 'faq-contents';
     singularName: 'faq-content';
   };
@@ -821,10 +821,20 @@ export interface PluginFaqAiBotFaqContent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    embedding: Schema.Attribute.JSON &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+        'content-type-builder': {
+          visible: false;
+        };
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
