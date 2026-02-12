@@ -14,7 +14,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
     const embedding = await strapi
       .plugin('faq-ai-bot')
-      .service('chat')
+      .service('embed')
       .generateEmbedding(textToEmbed);
 
     if (embedding) {
