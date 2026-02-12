@@ -4,7 +4,7 @@
   "private": true,
   "description": "A Strapi application",
   "scripts": {
-    "build:plugin":"cd src/plugins/faq-ai-bot && npm install && npm run build",
+    "build:plugin": "cd src/plugins/faq-ai-bot && npm install --force && npm run build",
     "build": "npm run build:plugin && strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
@@ -37,7 +37,7 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=20.0.0 <=22.x.x",
+    "node": ">=20.0.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
